@@ -1,51 +1,21 @@
-// class Solution {
-// public:
-//     int longestPalindrome(string s) {
-//         if(s.size()<2)return s.size();
-//         int even=0,odd=0;
-//         int len=0;
-//         unordered_map<char,int>freq;
-//         for(char ch:s){
-//             freq[ch]++;
-//         }
-//         for(const auto& n:freq){
-//             if(n.second%2==0){
-//                 even+=n.second;
-//                 len+=even;
-//             }
-//             else{
-//                 odd+=n.second;
-//                 if(odd>1){
-//                     len=len+(odd-1);
-//                 }
-//             }
-//         }
-//     return len;
-//     }
-// };
-
-#include <unordered_map>
-#include <string>
-
-using namespace std;
-
 class Solution {
 public:
     int longestPalindrome(string s) {
-        if (s.size() < 2) return s.size();
+        int len=0;
+        // hash map
+        unordered_map<char,int>freq;
+        for(char ch:s) freq[ch]++;
 
-        unordered_map<char, int> freq;
-        for (char ch : s) freq[ch]++;
+        bool isOdd=false;
 
-        int length = 0;
-        bool hasOdd = false;
+        for(auto [ch,fr]:freq){
+            if(fr%2==0)len+=fr;
 
-        for (const auto& pair : freq) {
-            int count = pair.second;
-            length += count / 2 * 2;  // Add even pairs
-            if (count % 2 == 1) hasOdd = true;  // Mark if any odd exists
+            else{
+                isOdd=true;
+                len+=fr-1;
+            }
         }
-
-        return length + (hasOdd ? 1 : 0);  // Add center if any odd
+    return (isOdd) ? len+1 : len ;
     }
 };
