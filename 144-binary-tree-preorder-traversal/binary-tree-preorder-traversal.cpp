@@ -9,21 +9,26 @@
  *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
  * };
  */
+
+
+//  iterative wala krenge 
 class Solution {
 public:
     vector<int> preorderTraversal(TreeNode* root) {
-        vector<int> vec;
-        preorder(root,vec);
-        return vec;
-    }
-private:
-    void preorder(TreeNode* root, vector<int>& vec){
-        if(root==NULL){
-            return;
+        vector<int>vec;
+        if (root==NULL) return vec;
+        stack<TreeNode*>st;
+        st.push(root);
+        while(!st.empty()){
+            TreeNode *node=st.top();st.pop();
+            vec.push_back(node->val);
+            if(node->right!=NULL){
+                st.push(node->right);
+            }
+            if(node->left!=NULL){
+                st.push(node->left);
+            }
         }
-        vec.push_back(root->val);
-        preorder(root->left,vec);
-        preorder(root->right,vec);
-
+        return vec;
     }
 };
