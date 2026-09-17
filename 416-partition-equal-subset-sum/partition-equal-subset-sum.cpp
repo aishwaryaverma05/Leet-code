@@ -5,8 +5,8 @@ public:
         if(ind==0) return (k==nums[0]);
 
         if(dp[ind][k]!=-1) return dp[ind][k];
-        int not_take=solve(nums,k,ind-1,dp);
-        int take=(nums[ind]<=k) ? solve(nums,k-nums[ind],ind-1,dp): false;
+        bool not_take=solve(nums,k,ind-1,dp);
+        bool take=(nums[ind]<=k) ? solve(nums,k-nums[ind],ind-1,dp): false;
 
         return dp[ind][k]=take | not_take;
     }
