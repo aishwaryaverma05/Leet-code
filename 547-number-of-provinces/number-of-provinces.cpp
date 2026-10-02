@@ -2,29 +2,40 @@ class Solution {
 public:
     void bfs(int start,vector<vector<int>>& isConnected,vector<int>& vis){
         queue<int>q;
-        q.push(start);
         vis[start]=1;
+        q.push(start);
         while(!q.empty()){
             int n=q.front();
             q.pop();
-            for(int j=0;j<isConnected.size();j++){
-                if(isConnected[n][j] == 1 && vis[j] == 0){
-                    vis[j]=1;
-                    q.push(j);
+            for(int i=0;i<isConnected.size();i++){
+                if(isConnected[n][i]==1 && vis[i]==0){
+                    vis[i]=1;
+                    q.push(i);
                 }
+            }
+        }
+
+    }
+    void dfs(int start,vector<vector<int>>& isConnected,vector<int>& vis){
+        vis[start]=1;
+        for(int i=0;i<isConnected.size();i++){
+            if(isConnected[start][i]==1 && vis[i]==0){
+                vis[i]==1;
+                dfs(i,isConnected,vis);
             }
         }
     }
     int findCircleNum(vector<vector<int>>& isConnected) {
-        int prov=0;
-        int n=isConnected.size();
-        vector<int>vis(n,0);
-        for(int i=0;i<n;i++){
+        // adj mat given 
+        int V=isConnected.size();
+        int cnt=0;
+        vector<int>vis(V,0);
+        for(int i=0;i<V;i++){
             if(vis[i]==0){
-                bfs(i,isConnected,vis);
-                prov++;
+                dfs(i,isConnected,vis);
+                cnt++;
             }
         }
-        return prov;
+        return cnt;
     }
 };
